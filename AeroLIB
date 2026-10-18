@@ -702,6 +702,10 @@ end
 
 function Library:NewSection(name)
     local section = {}
+    self._lastSection = section
+    if string.lower(tostring(name or "")) == "main" then
+        self._mainSection = section
+    end
 
     local tabBtn = Instance.new("TextButton")
     tabBtn.BackgroundColor3       = Color3.fromRGB(0,0,0)
@@ -1814,7 +1818,7 @@ function Library:NewSection(name)
         Corner(black, 5)
         local bg = Instance.new("UIGradient")
         bg.Rotation     = 90
-        bg.Transparency = NumberSequence.new(1, 0)
+        bg.Transparency = NumberSequence.new(1, 0)k
         bg.Parent = black
 
         local svCur = Instance.new("Frame")
@@ -2008,6 +2012,25 @@ function Library:NewSection(name)
         function obj.SetColor(c) fromColor(c, false) end
         function obj.GetColor() return color end
         return obj
+    end
+
+    -- Controls work from both the section (Main.NewButton) and the UI object
+    -- (UI.NewButton). Direct UI calls prefer the section named "Main"; if it
+    -- does not exist, they use the latest section created.
+    local directControls = {
+        "NewButton", "NewToggle", "NewSlider", "NewDropdown",
+        "NewTextBox", "NewAutoTextBox", "NewLabel", "NewParagraph",
+        "NewProfile", "NewKeybind", "NewColorPicker",
+    }
+
+    for _, methodName in ipairs(directControls) do
+        self[methodName] = function(first, second)
+            local target = self._mainSection or self._lastSection
+            assert(target, "Create a section with UI:NewSection('Main') before adding controls")
+            -- Accept both UI.NewButton(props) and UI:NewButton(props).
+            local props = (second ~= nil) and second or first
+            return target[methodName](props or {})
+        end
     end
 
     return section
