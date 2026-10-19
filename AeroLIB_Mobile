@@ -38,7 +38,7 @@ local Config = {
         CloseText  = Color3.fromRGB(110, 100, 255),
     },
     Size  = UDim2.new(0, 380, 0, 480),
-    Title = "Aero UI Library | I love my girlfriend <333",
+    Title = "Aero UI Library v1.0.0",
 }
 
 local TI_FAST   = TweenInfo.new(0.18, Enum.EasingStyle.Quint)
@@ -420,7 +420,7 @@ function Library.new(opts)
     creditsText.Position = UDim2.new(0, 10, 0, 7)
     creditsText.Size = UDim2.new(1, -20, 0, 96)
     creditsText.Font = Enum.Font.Gotham
-    creditsText.Text = "Made by rFlixzypoo\nAssets from q_ow2\nFree and Open Source\nVersion: 1.1.0\nFlixz is a simp for his girlfriend <3"
+    creditsText.Text = "Made by rFlixzypoo\nAssets from q_ow2\nFree and Open Source\nVersion: 1.0.0\nFlixz is a simp for his girlfriend <3"
     creditsText.TextColor3 = Color3.fromRGB(245, 239, 243)
     creditsText.TextSize = 12
     creditsText.TextXAlignment = Enum.TextXAlignment.Left
